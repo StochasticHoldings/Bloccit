@@ -3,7 +3,7 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-## Bloccit: a Reddit replica to teach the fundamentals of web development and Rails.
+## Bloccit: a Reddit replica to teach the fundamentals of web development and Rails..
 
 Things you may want to cover:
 
