@@ -29,3 +29,5 @@ source 'https://rubygems.org'
  gem 'turbolinks'
 
  gem 'json', '>= 1.8.3'
+
+ gem 'bootstrap-sass'
