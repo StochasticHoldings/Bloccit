@@ -1,3 +1,9 @@
+#This file helps for testing and to bring all of the data over for a new instanc of an application.
+# Github doesn't track the SQL database.
+#set of data that we want to maintain for initialization.
+# seeds is the code to test create the test database.
+
+# otherwise you would need a big script of SQL or do it by hand.
 require 'random_data'
 
  # Create Posts
@@ -20,6 +26,9 @@ require 'random_data'
      body: RandomData.random_paragraph
    )
  end
+
+ Post.find_or_create_by(title: "FooZebra", body: "BarBarBarBarBarBarBarBarBarBarBarBar")
+
 
  puts "Seed finished"
  puts "#{Post.count} posts created"
