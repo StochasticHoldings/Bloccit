@@ -27,6 +27,16 @@ require 'random_data'
    )
  end
 
+ 50.times do
+ # #1
+   Advertisement.create!(
+ # #2
+     title:  RandomData.random_sentence,
+     body:   RandomData.random_paragraph,
+     price: rand(50),
+   )
+ end
+
  Post.find_or_create_by(title: "FooZebra", body: "BarBarBarBarBarBarBarBarBarBarBarBar")
 
 
