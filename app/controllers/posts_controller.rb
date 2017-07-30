@@ -35,5 +35,62 @@ end
    end
 
   def edit
+    @post = Post.find(params[:id])
   end
 end
+
+def update
+     @post = Post.find(params[:id])
+     @post.title = params[:post][:title]
+     @post.body = params[:post][:body]
+
+     if @post.save
+       flash[:notice] = "Post was updated."
+       redirect_to @post
+     else
+       flash.now[:alert] = "There was an error saving the post. Please try again."
+       render :edit
+     end
+   end
+
+   describe "DELETE destroy" do
+     it "deletes the post" do
+       delete :destroy, {id: my_post.id}
+ # #6
+       count = Post.where({id: my_post.id}).size
+       expect(count).to eq 0
+     end
+
+     it "redirects to posts index" do
+       delete :destroy, {id: my_post.id}
+ # #7
+       expect(response).to redirect_to posts_path
+     end
+   end
+
+   def destroy
+     @post = Post.find(params[:id])
+
+ # #8
+     if @post.destroy
+       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
+       redirect_to posts_path
+     else
+       flash.now[:alert] = "There was an error deleting the post."
+       render :show
+     end
+   end
+   
+   def update
+     @post = Post.find(params[:id])
+     @post.title = params[:post][:title]
+     @post.body = params[:post][:body]
+
+     if @post.save
+       flash[:notice] = "Post was updated."
+       redirect_to @post
+     else
+       flash.now[:alert] = "There was an error saving the post. Please try again."
+       render :edit
+     end
+   end

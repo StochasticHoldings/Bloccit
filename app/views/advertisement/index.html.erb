@@ -1,0 +1,22 @@
+<h1>Advertisements List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <td>Title</td>
+      <td>Body</td>
+      <td>Price</td>
+      <td>Action</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @advertisements.each do |advertisement| %>
+      <tr>
+        <td><%= advertisement.title %></td>
+        <td><%= advertisement.body %></td>
+        <td><%= advertisement.price %></td>
+        <td><%= link_to 'View', advertisement %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
