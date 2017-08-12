@@ -1,18 +1,19 @@
 class PostsController < ApplicationController
-  def index
-    @posts = Post.all
-    @posts.each_with_index do |post, index|
-      if index % 5 == 0
-        post.title = "SPAM"
-      end
-   end
-end
+  #def index
+  #  @posts = Post.all
+  #  @posts.each_with_index do |post, index|
+  #    if index % 5 == 0
+  #      post.title = "SPAM"
+  #    end
+   #end
+#end
 
   def show
      @post = Post.find(params[:id])
   end
 
   def new
+    @topic = Topic.find(params[:topic_id])
     @post = Post.new
   end
 
@@ -21,12 +22,14 @@ end
      @post = Post.new
      @post.title = params[:post][:title]
      @post.body = params[:post][:body]
+     @topic = Topic.find(params[:topic_id])
+     @post.topic = @topic
 
  # #10
      if @post.save
  # #11
        flash[:notice] = "Post was saved."
-       redirect_to @post
+       redirect_to [@topic, @post]
      else
  # #12
        flash.now[:alert] = "There was an error saving the post. Please try again."
@@ -46,27 +49,13 @@ def update
 
      if @post.save
        flash[:notice] = "Post was updated."
-       redirect_to @post
+       redirect_to [@post.topic, @post]
      else
        flash.now[:alert] = "There was an error saving the post. Please try again."
        render :edit
      end
    end
 
-   describe "DELETE destroy" do
-     it "deletes the post" do
-       delete :destroy, {id: my_post.id}
- # #6
-       count = Post.where({id: my_post.id}).size
-       expect(count).to eq 0
-     end
-
-     it "redirects to posts index" do
-       delete :destroy, {id: my_post.id}
- # #7
-       expect(response).to redirect_to posts_path
-     end
-   end
 
    def destroy
      @post = Post.find(params[:id])
@@ -74,13 +63,13 @@ def update
  # #8
      if @post.destroy
        flash[:notice] = "\"#{@post.title}\" was deleted successfully."
-       redirect_to posts_path
+       redirect_to @post.topic
      else
        flash.now[:alert] = "There was an error deleting the post."
        render :show
      end
    end
-   
+
    def update
      @post = Post.find(params[:id])
      @post.title = params[:post][:title]
