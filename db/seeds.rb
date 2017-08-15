@@ -27,6 +27,18 @@ require 'random_data'
  end
  posts = Post.all
 
+ # Create Sponsored Posts
+ 5.times do
+ # #1
+   SponsoredPost.create!(
+   topic:  topics.sample,
+ # #2
+     title:  RandomData.random_sentence,
+     body:   RandomData.random_paragraph
+   )
+ end
+ posts = SponsoredPost.all
+
  # Create Comments
  # #3
  100.times do
