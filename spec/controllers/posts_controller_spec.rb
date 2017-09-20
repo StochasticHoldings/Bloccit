@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :controller do
 
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
-
- let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
-
+  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:new_title) {new_title.create!(title: RandomData.random_sentence}
+  let(:new_body) {new_body.create!(body: RandomData.random_sentence)}
 
   describe "GET show" do
      it "returns http success" do
@@ -89,8 +89,6 @@ RSpec.describe PostsController, type: :controller do
       end
       describe "PUT update" do
            it "updates post with expected attributes" do
-             new_title = RandomData.random_sentence
-             new_body = RandomData.random_paragraph
 
              put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
 
@@ -101,8 +99,7 @@ RSpec.describe PostsController, type: :controller do
      end
 
      it "redirects to the updated post" do
-       new_title = RandomData.random_sentence
-       new_body = RandomData.random_paragraph
+
 
        put :update, id: my_post.id, post: {title: new_title, body: new_body}
        expect(response).to redirect_to my_post
@@ -121,9 +118,6 @@ RSpec.describe PostsController, type: :controller do
            end
 
            it "redirects to the updated post" do
-             new_title = RandomData.random_sentence
-             new_body = RandomData.random_paragraph
-
              put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
 
             expect(response).to redirect_to [my_topic, my_post]
