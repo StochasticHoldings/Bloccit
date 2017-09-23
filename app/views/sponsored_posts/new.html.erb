@@ -1,4 +1,16 @@
-<h1>SponsoredPosts#new</h1>
+<h1>New SponsoredPosts</h1>
+<div class="row">
+  <div class="col-md-4">
+    <p>Guidelines for sponsored posts</p>
+    <ul>
+      <li>All sponsored posts are subject to approval by the community team</li>
+      <li>Off topic sponsored posts will get you banned</li>
+    </ul>
+  </div>
+  <div class="col-md-8">
+    <%=  render partial: 'form',  locals: { topic: Topic.find(params[:topic_id]), sponsored_post: @sponsored_post }%>
+  </div>
+</div>
 
-number_field(sponsored_posts, price, options = {})
 <p>Find me in app/views/sponsored_posts/new.html.erb</p>
+</div>

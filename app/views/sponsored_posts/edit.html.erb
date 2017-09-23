@@ -1,16 +1,14 @@
 <h1>SponsoredPosts#edit</h1>
 <div class="row">
   <div class="col-md-4">
-    <p>Guidelines for sponsored posts</p>
+    <p>Guidelines for posts</p>
     <ul>
-      <li>All sponsored posts are subject to approval by the community team</li>
-      <li>Off topic sponsored posts will get you banned</li>
+      <li>Make sure it rhymes.</li>
+      <li>Don't use the letter "A".</li>
+      <li>The incessant use of hashtags will get you banned.</li>
     </ul>
   </div>
   <div class="col-md-8">
-    <%= render partial: 'form', locals: { topic: @post.topic, post: @post }
-    number_field(sponsored_posts:, price, options = {}) %>
+    <%= render partial: 'form', locals: { topic: @sponsored_post.topic, sponsored_post: @sponsored_post } %>
   </div>
 </div>
-
-<p>Find me in app/views/sponsored_posts/edit.html.erb</p>
