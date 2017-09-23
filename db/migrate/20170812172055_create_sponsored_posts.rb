@@ -1,7 +1,8 @@
 class CreateSponsoredPosts < ActiveRecord::Migration
   def change
     create_table :sponsored_posts do |t|
-      t.stringbody :title
+      t.string :title
+      t.text :body
       t.integer :price
 
       t.timestamps null: false

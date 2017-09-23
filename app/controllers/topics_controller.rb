@@ -7,8 +7,9 @@ class TopicsController < ApplicationController
 end
 def new
      @topic = Topic.new
-   end
-   def create
+end
+
+def create
      @topic = Topic.new
      @topic.name = params[:topic][:name]
      @topic.description = params[:topic][:description]
@@ -37,6 +38,17 @@ def update
     else
       flash.now[:alert] = "Error saving topic. Please try again."
       render :edit
+    end
+  end
+
+  def destroy
+    @topic = Topic.find(params[:id])
+
+    if @topic.destroy
+        flash[:notice] = "Topic was deleted!"
+        redirect_to topics_path
+    else
+      redirect_to :back
     end
   end
 end
