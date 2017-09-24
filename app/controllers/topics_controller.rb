@@ -15,6 +15,8 @@ def create
      @topic.description = params[:topic][:description]
      @topic.public = params[:topic][:public]
 
+
+
      if @topic.save
        redirect_to @topic, notice: "Topic was saved successfully."
      else
@@ -22,6 +24,7 @@ def create
        render :new
      end
    end
+
 
    def edit
   @topic = Topic.find(params[:id])
