@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
   let(:name) { RandomData.random_sentence }
-   let(:description) { RandomData.random_paragraph }
+  let(:description) { RandomData.random_paragraph }
    let(:public) { true }
    let(:topic) { Topic.create!(name: name, description: description) }
 
-    it { is_expected.to have_many(:posts) }
+    it { should have_many(:posts) }
+    it { should validate_length_of(:name).is_at_least(5) }
+    it { should validate_length_of(:description).is_at_least(15) }
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:description) }
 
  # #1
    describe "attributes" do
@@ -18,5 +22,5 @@ RSpec.describe Topic, type: :model do
      it "is public by default" do
        expect(topic.public).to be(true)
      end
-   end"
+   end
 end

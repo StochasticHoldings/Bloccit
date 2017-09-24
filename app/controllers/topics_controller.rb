@@ -22,6 +22,7 @@ def create
        render :new
      end
    end
+
    def edit
   @topic = Topic.find(params[:id])
 end
@@ -51,4 +52,8 @@ def update
       redirect_to :back
     end
   end
+
+  def topic_params
+    params.permit(:description, :body, :name, :public)
+ end
 end
