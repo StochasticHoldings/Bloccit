@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   def new
      @user = User.new
    end
+
    def create
+     #require("pry"); binding.pry
      @user = User.new
      @user.name = params[:user][:name]
      @user.email = params[:user][:email]
@@ -16,5 +18,11 @@ class UsersController < ApplicationController
        render :new
      end
    end
+
+ def confirm
+   @user = User.new
+   @user.name = params[:user][:name]
+   @user.email = params[:user][:email]   
+ end
 
 end
