@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-
+  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
-  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
   let(:new_title) {new_title.create!(title: RandomData.random_sentence}
   let(:new_body) {new_body.create!(body: RandomData.random_sentence)}
 
