@@ -64,12 +64,20 @@ end
 
 Post.find_or_create_by(title: "FooZebra", body: "BarBarBarBarBarBarBarBarBarBarBarBar")
 
-user = User.first
-user.update_attributes!(
- email: 'bob@email.com', # replace this with your personal email
-  password: 'helloworld'
-)
+# Create an admin user
+ admin = User.create!(
+   name:     'Admin User',
+   email:    'admin@example.com',
+   password: 'helloworld',
+   role:     'admin'
+ )
 
+ # Create a member
+ member = User.create!(
+   name:     'Member User',
+   email:    'member@example.com',
+   password: 'helloworld'
+ )
 puts "Seed finished"
 puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
