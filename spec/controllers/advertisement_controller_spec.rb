@@ -11,7 +11,10 @@ RSpec.describe AdvertisementsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      @advertisement  = Advertisement.create(title: "first ad", body: "This is the coolest ad ever! Read it", price: 10000)
+      #@advertisement.save
+      #puts @advertisement.id
+      get :show, id: @advertisement.id
       expect(response).to have_http_status(:success)
     end
   end
@@ -25,8 +28,8 @@ RSpec.describe AdvertisementsController, type: :controller do
 
   describe "GET #create" do
     it "returns http success" do
-      get :create
-      expect(response).to have_http_status(:success)
+      get :create, advertisement: {title: "first ad", body: "This is the coolest ad ever! Read it", price: 10000}
+      expect(response).to have_http_status(:found)
     end
   end
 

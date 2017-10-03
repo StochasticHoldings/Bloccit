@@ -68,6 +68,7 @@ RSpec.describe PostsController, type: :controller do
     before do
       create_session(my_user)
     end
+
     describe "GET show" do
       it "returns http success" do
         get :show, topic_id: my_topic.id, id: my_post.id
@@ -111,6 +112,7 @@ RSpec.describe PostsController, type: :controller do
         post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
         expect(assigns(:post)).to eq Post.last
       end
+
       it "redirects to the new post" do
         post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
         expect(response).to redirect_to [my_topic, Post.last]
@@ -127,9 +129,9 @@ RSpec.describe PostsController, type: :controller do
         get :edit, topic_id: my_topic.id, id: my_post.id
         expect(response).to render_template :edit
       end
+
       it "assigns post to be updated to @post" do
         get :edit, topic_id: my_topic.id, id: my_post.id
-
         post_instance = assigns(:post)
 
         expect(post_instance.id).to eq my_post.id
@@ -138,50 +140,36 @@ RSpec.describe PostsController, type: :controller do
       end
     end
     describe "PUT update" do
-      it "updates post with expected attributes" do
+      new_body = "new_body_must_be_up_to_20_characters"
 
-        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
+      it "updates post with expected attributes" do
+        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: "new_title", body: new_body}
 
         updated_post = assigns(:post)
         expect(updated_post.id).to eq my_post.id
-        expect(updated_post.title).to eq new_title
+        expect(updated_post.title).to eq "new_title"
         expect(updated_post.body).to eq new_body
       end
 
       it "redirects to the updated post" do
+        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: "new_title", body: new_body}
+        updated_post = assigns(:post)
+        expect(response).to redirect_to topic_post_path(id: updated_post.id)
+      end
+    end
 
+    describe "DELETE destroy" do
+      it "deletes the post" do
+        delete :destroy, topic_id: my_topic.id, id: my_post.id
 
-        put :update, id: my_post.id, post: {title: new_title, body: new_body}
-        expect(response).to redirect_to my_post
-        put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
-        expect(response).to redirect_to [my_topic, my_post]
+        count = Post.where({id: my_post.id}).size
+        expect(count).to eq 0
+      end
 
-
-
-    updated_post = assigns(:post)
-    expect(updated_post.id).to eq my_post.id
-    expect(updated_post.title).to eq new_title
-    expect(updated_post.body).to eq new_body
+      it "redirects to topic show" do
+        delete :destroy, topic_id: my_topic.id, id: my_post.id
+        expect(response).to redirect_to my_topic
+      end
+    end
   end
-
-  it "redirects to the updated post" do
-    put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title, body: new_body}
-
-    expect(response).to redirect_to [my_topic, my_post]
-  end
-end
-
-describe "DELETE destroy" do
-  it "deletes the post" do
-    delete :destroy, topic_id: my_topic.id, id: my_post.id
-
-    count = Post.where({id: my_post.id}).size
-    expect(count).to eq 0
-  end
-
-  it "redirects to topic show" do
-    delete :destroy, topic_id: my_topic.id, id: my_post.id
-    expect(response).to redirect_to my_topic
-  end
-end
 end

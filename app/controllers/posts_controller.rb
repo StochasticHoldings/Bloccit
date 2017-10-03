@@ -33,7 +33,6 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     @post.assign_attributes(post_params)
-
     if @post.save
       flash[:notice] = "Post was updated."
       redirect_to [@post.topic, @post]

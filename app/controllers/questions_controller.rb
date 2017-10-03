@@ -10,4 +10,8 @@ class QuestionsController < ApplicationController
 
   def destroy
   end
+
+  def index
+    @questions = Question.all
+  end
 end
