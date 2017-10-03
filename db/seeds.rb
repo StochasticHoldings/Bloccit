@@ -44,7 +44,7 @@ posts = Post.all
     body:   RandomData.random_paragraph
   )
 end
-posts = SponsoredPost.all
+sponsored_posts = SponsoredPost.all
 
 # Create Comments
 100.times do
@@ -66,7 +66,7 @@ Post.find_or_create_by(title: "FooZebra", body: "BarBarBarBarBarBarBarBarBarBarB
 
 user = User.first
 user.update_attributes!(
-  email: 'youremail.com', # replace this with your personal email
+ email: 'bob@email.com', # replace this with your personal email
   password: 'helloworld'
 )
 
