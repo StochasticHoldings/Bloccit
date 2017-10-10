@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
   it { is_expected.to have_many(:comments) }
   it { is_expected.to have_many(:votes) }
+  it { is_expected.to have_many(:favorites) }
   it { is_expected.to have_many(:posts) }
   # Shoulda tests for name
   it { is_expected.to validate_presence_of(:name) }
@@ -40,9 +41,9 @@ RSpec.describe User, type: :model do
     end
 
     it "responds to moderator" do
-       expect(user).to respond(:moderator)
+      expect(user).to respond(:moderator)
     end
-end
+  end
 
   describe "roles" do
     it "is member by default" do
@@ -56,7 +57,7 @@ end
         expect(user.admin?).to be_falsey
       end
       it "returns false for #moderator" do
-         expect(user.moderator?).to be_falsey
+        expect(user.moderator?).to be_falsey
       end
     end
     context "admin user" do
@@ -66,7 +67,7 @@ end
 
       context "moderator user"  do
         it "returns true for #moderator" do
-           expect(user.moderator?).to be_truthy
+          expect(user.moderator?).to be_truthy
         end
 
         it  "returns false for #member" do
@@ -74,7 +75,7 @@ end
         end
 
         it "returns false for #admin" do
-             expect(user.admin).to be_falsey
+          expect(user.admin).to be_falsey
         end
       end
 
@@ -82,7 +83,7 @@ end
         expect(user.member?).to be_falsey
       end
       it "returns false for #moderator" do
-         expect(user.moderator?).to be_falsey
+        expect(user.moderator?).to be_falsey
       end
 
       it "returns true for #admin?" do
@@ -92,17 +93,32 @@ end
   end
 
 
-describe "invalid user" do
-  let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
-  let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+  describe "invalid user" do
+    let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
+    let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
 
-  it "should be an invalid user due to blank name" do
-    expect(user_with_invalid_name).to_not be_valid
+    it "should be an invalid user due to blank name" do
+      expect(user_with_invalid_name).to_not be_valid
+    end
+
+    it "should be an invalid user due to blank email" do
+      expect(user_with_invalid_email).to_not be_valid
+    end
   end
 
-  it "should be an invalid user due to blank email" do
-    expect(user_with_invalid_email).to_not be_valid
-  end
-end
+  describe "#favorite_for(post)" do
+    before do
+      topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+      @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+    end
 
+    it "returns `nil` if the user has not favorited the post" do
+      expect(user.favorite_for(@post)).to be_nil
+    end
+
+    it "returns the appropriate favorite if it exists" do
+      favorite = user.favorites.where(post: @post).create
+      expect(user.favorite_for(@post)).to eq(favorite)
+    end
+  end
 end
