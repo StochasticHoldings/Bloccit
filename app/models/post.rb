@@ -5,6 +5,7 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   has_many :favorites, dependent: :destroy
   default_scope { order('rank DESC') }
+   scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
   after_create :create_vote
 
   validates :title, length: { minimum: 5 }, presence: true
