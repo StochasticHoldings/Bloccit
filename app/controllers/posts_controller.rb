@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
     before_action :authorize_admin, except: [:show, :new, :create]
-    before_action :authorize_member
+    before_action :authorize_member, only: [:create, :update, :delete]
     before_action :authorize_moderator, only: [:create, :update]
 
   def show
@@ -15,6 +15,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    require("pry"); binding.pry
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.build(post_params)
     @post.user = current_user
@@ -63,16 +64,24 @@ class PostsController < ApplicationController
   end
 
   def authorize_admin
-    post = Post.find(params[:id])
-    unless current_user == post.user || current_user.admin?
+    require("pry-rails"); binding.pry
+    unless current_user.admin?
       flash[:alert] = "You must be an admin to do that."
       redirect_to [post.topic, post]
     end
   end
 
+  def authorize_member
+    require("pry-rails"); binding.pry
+    unless current_user.member?
+      flash[:alert] = "You must be a member to do that."
+      redirect_to new_topic_post_path
+    end
+  end
+
   def authorize_moderator
-    post = Post.find(params[:id])
-    unless current_user == post.user || current_user.moderator?
+    require("pry-rails"); binding.pry
+    unless current_user.moderator?
       flash[:alert] = "You must be a moderator to do that."
       redirect_to [post.topic, post]
     end

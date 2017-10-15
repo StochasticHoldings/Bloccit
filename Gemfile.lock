@@ -80,6 +80,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     rack (1.6.4)
@@ -173,6 +175,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   jquery-rails
   json (>= 1.8.3)
+  pry-nav
   pry-rails
   rails (= 4.2.5)
   rails_12factor

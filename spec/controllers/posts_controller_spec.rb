@@ -9,6 +9,11 @@ RSpec.describe PostsController, type: :controller do
 
   context "guest user" do
     describe "GET show" do
+
+      before do
+        create_session(my_user)
+      end
+
       it "returns http success" do
         get :show, topic_id: my_topic.id, id: my_post.id
         expect(response).to have_http_status(:success)
@@ -88,33 +93,38 @@ RSpec.describe PostsController, type: :controller do
 
     describe "GET new" do
       it "returns http success" do
-        get :new, topic_id: my_topic.id
+        get :new, topic_id: my_topic.id, id: my_post.id
         expect(response).to have_http_status(:success)
       end
 
       it "renders the #new view" do
-        get :new, topic_id: my_topic.id
+        get :new, topic_id: my_topic.id, id: my_post.id
         expect(response).to render_template :new
       end
 
       it "instantiates @post" do
-        get :new, topic_id: my_topic.id
+        get :new, topic_id: my_topic.id, id: my_post.id
         expect(assigns(:post)).not_to be_nil
       end
     end
 
     describe "POST create" do
+
+        let(:sample_post) { my_topic.posts.create!(id: "7", title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+
+
+
       it "increases the number of Post by 1" do
-        expect{post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Post,:count).by(1)
+        expect{post :create, topic_id: my_topic.id, post: sample_post, id: 7}.to change(Post,:count).by(1)
       end
 
       it "assigns the new post to @post" do
-        post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+        post :create, topic_id: my_topic.id, id: my_post.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
         expect(assigns(:post)).to eq Post.last
       end
 
       it "redirects to the new post" do
-        post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+        post :create, topic_id: my_topic.id, id: my_post.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
         expect(response).to redirect_to [my_topic, Post.last]
       end
     end
