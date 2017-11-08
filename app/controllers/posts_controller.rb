@@ -15,7 +15,6 @@ class PostsController < ApplicationController
   end
 
   def create
-    require("pry"); binding.pry
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.build(post_params)
     @post.user = current_user
@@ -35,6 +34,7 @@ class PostsController < ApplicationController
   end
 
   def update
+    require("pry-rails"); binding.pry
     @post = Post.find(params[:id])
     @post.assign_attributes(post_params)
     if @post.save
@@ -64,26 +64,23 @@ class PostsController < ApplicationController
   end
 
   def authorize_admin
-    require("pry-rails"); binding.pry
     unless current_user.admin?
       flash[:alert] = "You must be an admin to do that."
-      redirect_to [post.topic, post]
+      redirect_to root_path
     end
   end
 
   def authorize_member
-    require("pry-rails"); binding.pry
     unless current_user.member?
       flash[:alert] = "You must be a member to do that."
-      redirect_to new_topic_post_path
+      redirect_to root_path
     end
   end
 
   def authorize_moderator
-    require("pry-rails"); binding.pry
     unless current_user.moderator?
       flash[:alert] = "You must be a moderator to do that."
-      redirect_to [post.topic, post]
+      redirect_to root_path
     end
   end
 end

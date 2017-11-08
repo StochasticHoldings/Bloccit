@@ -22,12 +22,13 @@ RSpec.describe SponsoredPostsController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
   it "logs the user in after sign up" do
     post :create, user: new_user_attributes
     expect(session[:user_id]).to eq assigns(:user).id
   end
-end
-describe "not signed in" do
+
+  describe "not signed in" do
 
     let(:factory_user) { create(:user) }
 

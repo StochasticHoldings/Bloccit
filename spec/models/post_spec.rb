@@ -5,11 +5,11 @@ RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post) }
   let(:body) { RandomData.random_paragraph }
-  let(:topic) { Topic.create!(name: name, description: description) }
+  let(:topic) { Topic.create!(name: RandomData.random_name, description: RandomData.random_sentence) }
 
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
 
-  let(:post) { topic.posts.create!(title: title, body: body, user: user) }
+  let(:post) { topic.posts.create!(title: "random title", body: body, user: user) }
   it { is_expected.to have_many(:comments) }
   it { is_expected.to have_many(:votes) }
   it { is_expected.to have_many(:favorites) }
