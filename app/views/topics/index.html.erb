@@ -6,9 +6,9 @@
     <%= render partial: 'topic', locals: {topic: topic }%>
      <% end %>
    </div>
-   <% if user_is_authorized_for_topics? %>
+   <% if user_is_authorized_to_delete_topics? %>
    <div class="col-md-4">
-  <% end %>
      <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %>
    </div>
+   <% end %>
  </div>
