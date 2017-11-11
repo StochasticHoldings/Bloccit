@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :vote do
-    value rand(2)
+    value [-1, 1].sample
     user
     post
   end

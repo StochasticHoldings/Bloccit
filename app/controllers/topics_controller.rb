@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, only: [:create, :update, :destroy]
-  before_action :authorize_moderator, only: :update
+  before_action :authorize_moderator, only: [:update, :edit]
+  before_action :authorize_user, only: [:create, :destroy, :new]
 
   def index
     #require("pry-rails"); binding.pry
@@ -28,6 +28,7 @@ def create
    end
 
    def edit
+     #require("pry-rails"); binding.pry
   @topic = Topic.find(params[:id])
 end
 
@@ -65,6 +66,7 @@ def update
   end
 
   def authorize_user
+    #require("pry-rails"); binding.pry
     unless current_user.admin?
       flash[:alert] = "You must be an admin to do that."
       redirect_to topics_path
@@ -72,6 +74,7 @@ def update
   end
 
   def authorize_moderator
+    #require("pry-rails"); binding.pry
     unless current_user.admin? || current_user.moderator?
       flash[:alert] = "You must be an admin to do that."
       redirect_to topics_path
